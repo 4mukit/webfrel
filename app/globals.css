@@ -1,0 +1,250 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    /* Themeable Colors - Restored to Original Vibe */
+    --background: 210 11% 7%; /* #0f1211 */
+    --foreground: 160 14% 93%; /* #e7eceb */
+
+    --muted: 240 2% 16%; /* #27272a */
+    --muted-foreground: 160 14% 93% / 0.7; /* rgba(231, 236, 235, 0.7) */
+    --muted-foreground-light: 160 14% 93% / 0.5; /* rgba(231, 236, 235, 0.5) */
+    --muted-foreground-dark: 160 14% 93% / 0.6; /* rgba(231, 236, 235, 0.6) */
+
+    --card: 220 17% 98% / 0.01;
+    --card-foreground: 160 14% 93%;
+
+    --popover: 210 11% 7%;
+    --popover-foreground: 160 14% 93%;
+
+    /* Primary Accent Colors */
+    --primary: 165 96% 71%; /* #78fcd6 */
+    --primary-foreground: 160 8% 6%; /* #0d0f0e */
+    --primary-dark: 160 100% 50%; /* #00ffb6 */
+    --primary-light: 160 48% 87%; /* New variable for lighter teal/green shades */
+
+    /* Secondary Accent Colors (for buttons, etc.) */
+    --secondary: 160 14% 93%; /* #e7eceb */
+    --secondary-foreground: 165 14% 8%; /* #141a18 */
+
+    --accent: 240 2% 25%; /* #3f3f42 */
+    --accent-foreground: 240 2% 96%; /* #f4f4f5 */
+
+    --border: 240 100% 100% / 0.08; /* rgba(255, 255, 255, 0.08) */
+    --border-light: 210 17% 6% / 0.1; /* rgba(16,24,40,0.1) */
+    --border-dark: 210 17% 6% / 0.05; /* rgba(16,24,40,0.05) */
+
+    --ring: 165 96% 71%;
+
+    --radius: 0.5rem;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+  body {
+    @apply bg-background text-foreground;
+  }
+}
+
+/* Smooth scrolling */
+html {
+  scroll-behavior: smooth;
+}
+
+/* Custom animations */
+@keyframes shimmer {
+  0% {
+    background-position: -200% 0;
+  }
+  100% {
+    background-position: 200% 0;
+  }
+}
+
+@keyframes float {
+  0%,
+  100% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-10px);
+  }
+}
+
+@keyframes glow {
+  0%,
+  100% {
+    opacity: 0.5;
+  }
+  50% {
+    opacity: 1;
+  }
+}
+
+@keyframes gradient-shift {
+  0%,
+  100% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+}
+
+@keyframes wave-colors {
+  0%,
+  100% {
+    background-position: 0% 50%;
+  }
+  25% {
+    background-position: 100% 50%;
+  }
+  50% {
+    background-position: 200% 50%;
+  }
+  75% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+@keyframes wave-shine {
+  0% {
+    transform: translateX(-100%) skewX(-15deg);
+    opacity: 0;
+  }
+  50% {
+    opacity: 1;
+  }
+  100% {
+    transform: translateX(200%) skewX(-15deg);
+    opacity: 0;
+  }
+}
+
+.animate-shimmer {
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+  background-size: 200% 100%;
+  animation: shimmer 2s infinite;
+}
+
+.animate-float {
+  animation: float 3s ease-in-out infinite;
+}
+
+.animate-glow {
+  animation: glow 2s ease-in-out infinite;
+}
+
+.animated-wave-text {
+  background: linear-gradient(
+    45deg,
+    hsl(var(--foreground)),
+    hsl(var(--primary)),
+    hsl(var(--primary-light)),
+    hsl(var(--primary)),
+    hsl(var(--foreground)),
+    hsl(var(--primary-dark)),
+    hsl(var(--primary)),
+    hsl(var(--foreground))
+  );
+  background-size: 400% 400%;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* Add hover-only wave animation */
+.hover-wave-text {
+  transition: all 0.3s ease;
+}
+
+.hover-wave-text:hover {
+  background: linear-gradient(
+    45deg,
+    hsl(var(--foreground)),
+    hsl(var(--primary)),
+    hsl(var(--primary-light)),
+    hsl(var(--primary)),
+    hsl(var(--foreground)),
+    hsl(var(--primary-dark)),
+    hsl(var(--primary)),
+    hsl(var(--foreground))
+  );
+  background-size: 400% 400%;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  animation: wave-colors 4s ease-in-out infinite;
+}
+
+.wave-shine {
+  position: relative;
+  overflow: hidden;
+}
+
+.wave-shine::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.4), transparent);
+  transform: translateX(-100%) skewX(-15deg);
+  transition: none;
+}
+
+.wave-shine:hover::before {
+  animation: wave-shine 0.8s ease-out;
+}
+
+.scroll-fade-up {
+  opacity: 0;
+  transform: translateY(30px);
+  transition: all 0.8s ease-out;
+}
+
+.scroll-fade-up.in-view {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.scroll-slide-left {
+  opacity: 0;
+  transform: translateX(-50px);
+  transition: all 1s ease-out;
+}
+
+.scroll-slide-left.in-view {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+.scroll-scale {
+  opacity: 0;
+  transform: scale(0.9);
+  transition: all 0.9s ease-out;
+}
+
+.scroll-scale.in-view {
+  opacity: 1;
+  transform: scale(1);
+}
+
+/* Gradient text animation */
+.gradient-text {
+  background: linear-gradient(45deg, hsl(var(--primary)), hsl(var(--primary-light)), hsl(var(--primary)));
+  background-size: 200% 200%;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  animation: gradient-shift 3s ease infinite;
+}
